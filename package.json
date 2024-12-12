@@ -1,0 +1,29 @@
+{
+  "name": "blogging_api",
+  "version": "1.0.0",
+  "description": "Blog API { Altschool Second Semester Exam }",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":  "src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "Nodejs",
+    "Expressjs",
+    "MongoDB"
+  ],
+  "author": "Adeoye Okeowo Miracle",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.4",
+    "shortid": "^2.2.16"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
