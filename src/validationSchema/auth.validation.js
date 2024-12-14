@@ -12,9 +12,9 @@ const registerValidationSchema = [
         .notEmpty().withMessage('Lastname is required'),
 
     body('username')
-        .isString().withMessage('Lastname must be a string')
+        .isString().withMessage('Username must be a string')
         .isLength({ min: 5, max: 30 }).withMessage('Username must be between 5 and 30 characters')
-        .notEmpty().withMessage('Lastname is required'),
+        .notEmpty().withMessage('Username is required'),
 
     body('email')
         .isEmail().withMessage('Invalid email format')
