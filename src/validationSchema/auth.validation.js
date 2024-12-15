@@ -22,9 +22,9 @@ const registerValidationSchema = [
 
     body('password')
         .isString().withMessage('Password must be a string')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_])$/)
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).+$/)
         .withMessage('Password must include at least a lowercase letter, an uppercase letter, a number, and special character')
-        .isLength({ min: 8, max: 30 }).withMessage('Password must be at least 8 characters')
+        .isLength({ min: 8}).withMessage('Password must be at least 8 characters')
         .notEmpty().withMessage('Password is required'),
     
 ];
