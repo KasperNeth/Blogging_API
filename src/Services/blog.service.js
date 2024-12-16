@@ -17,7 +17,10 @@ const createBlog = async (data, authorId) => {
   try {
     const readTime = CaculateReadTime(data.body);
     const newBlog = new BlogModel({
-      ...data, 
+      title: data.title,
+      description: data.description,
+      body:data.body,
+      tags: data.tags,
       read_time: readTime,
        author: authorId, 
        state: "draft"
@@ -35,7 +38,7 @@ const createBlog = async (data, authorId) => {
     return {
       code: 500,
       success: false,
-      message: err.message || "Internal server error",
+      message: err.message || "Internal server error, Fail to create blog",
       data: null,
       
     }
