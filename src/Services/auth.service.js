@@ -18,7 +18,7 @@ const Signup = async (data)=>{
       email,
       password
     });
-    const payload = ({email: newUser.email, username: newUser.username});
+    const payload = ({ _id: newUser._id, email: newUser.email, username: newUser.username});
     await newUser.save();
     // const token = TokenGenerator(payload);
     return{
@@ -69,7 +69,7 @@ const Signin = async(email, password)=> {
       }
     }
   
-    const payload = ({email: User.email, username: User.username});
+    const payload = ({_id: User._id, email: User.email, username: User.username});
     return{
       code: 200,
       success: true,
