@@ -77,7 +77,7 @@ const getBlogById = async (blogId) => {
 
 const updateBlog = async (blogId, data, authorId) => {
   try {
-    const blog = await BlogModel.findOneAndUpdate({_id: blogId, author: authorId}, data, {new: true});
+    const blog = await BlogModel.findOneAndUpdate({_id: blogId, author: authorId});
     if(!blog){
       return {
         code: 404,
@@ -88,8 +88,19 @@ const updateBlog = async (blogId, data, authorId) => {
     }
 
    
+    //allow body to update in draft and published state
+    if(data.body){
+      blog.body = data.body;
+
+      //update read time if body is updated
     const readTime = CaculateReadTime(data.body);
     blog.read_time = readTime;
+}
+ //allow title, tags, description to update in draft and published state
+ if (data.title) blog.title = data.title;
+ if (data.tags) blog.tags = data.tags;
+  if (data.description) blog.description = data.description;
+  if (data.state) blog.state = data.state;
     const updatedBlog = await blog.save();
     return {
       code: 200,
