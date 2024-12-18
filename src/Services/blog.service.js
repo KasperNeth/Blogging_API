@@ -182,27 +182,20 @@ const deleteBlog = async (blogId, authorId) => {
 }
 
 
-const getPublishBlog = async(filter={}, pagination = {limit:20, page:1}, sorting = {timestamp: -1} ) =>{
+const getBlogs = async(filter={}, pagination ={}, sorting = {} ) =>{
   try{
-    const searchField =  {};
+   
+   const {limit= 20, page = 1} = pagination;
 
-    if(filter.tags){
-      searchField.tags = {$in: filter.tags.split(",")};
-    }
-    if(filter.author){
-      searchField["author.username"] = {$regex: filter.author, $options: "i"};
-    }
-    if(filter.title){
-      searchField.title = {$regex: filter.title, $options: "i"};
-    }
+   options ={
+     limit: parseInt(limit),
+     page: parseInt(page),
+     sort: sorting,
+   }
 
-    const query = {state: "published", ...searchField};
 
-    const limit = parseInt(pagination.limit);
-    const page = parseInt(pagination.page - 1) * limit;
-
-    const blogs = await BlogModel.find(query).populate("author", "username email").sort(sorting).limit(limit).skip(page);
-
+   //
+    const blogs = await BlogModel.paginate(filter, options)
     return {
       code: 200,
       success: true,
@@ -230,5 +223,5 @@ module.exports = {
   getBlogById,
   updateBlog,
   deleteBlog,
-  getPublishBlog,
+  getBlogs
 };
