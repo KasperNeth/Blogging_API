@@ -93,7 +93,7 @@ const getBlogById = async (blogId, authorId) => {
 
 const updateBlog = async (blogId, data, authorId) => {
   try {
-    const blog = await BlogModel.findOneAndUpdate({_id: blogId, author: authorId});
+    const blog = await BlogModel.findById(blogId);
     if(!blog){
       return {
         code: 404,
@@ -101,6 +101,15 @@ const updateBlog = async (blogId, data, authorId) => {
         message: "Blog not found or you are not the author",
         data: null,
       }
+    }
+   //check  originality of blog ownership before updating
+    if ((!authorId || !blog.author._id.equals(authorId))){
+      return {
+        code: 403,
+        success: false,
+        message: "Unauthorized: You are not allowed to update this blog.",
+        data: null,
+      };
     }
 
    
