@@ -1,6 +1,5 @@
 const BlogModel = require("../models/blog.model");
 
-
 const CaculateReadTime = (body) => {
   const wordsPerMinute = 200;
   let wordCount = 0;
@@ -47,9 +46,9 @@ const createBlog = async (data, authorId) => {
 
 }
 
-const getBlogById = async (blogId) => {
+const getBlogById = async (blogId, authorId) => {
   try {
-    const blog = await BlogModel.findOneAndUpdate(blogId).populate("author", "username email","tags");
+    const blog = await BlogModel.findOne({_id: blogId}).populate("author", "username email first_name last_name"); 
     if(!blog){
       return {
         code: 404,
@@ -57,6 +56,23 @@ const getBlogById = async (blogId) => {
         message: "Blog not found",
         data: null,
       }
+    }
+
+
+    //check unauthorized users access to draft blog
+    if ((!authorId || !blog.author._id.equals(authorId)) && blog.state !== "published"){
+      return {
+        code: 403,
+        success: false,
+        message: "Unauthorized access",
+        data: null,
+      }
+    }
+    //check if user is not the author and increment read count
+    if (!authorId || !blog.author._id.equals(authorId)) {
+      //increment read count if user is not the author
+     await BlogModel.findOneAndUpdate({ _id: blogId }, { $inc: { read_count: 1 } },{ new: true })
+
     }
     return {
       code: 200,
