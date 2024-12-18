@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 
 
@@ -15,7 +16,7 @@ const BlogSchema = new mongoose.Schema({
     trim: true,
   },
   author: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     trim: true
   },
@@ -39,14 +40,13 @@ const BlogSchema = new mongoose.Schema({
   },
   read_count: {
     type: Number,
-    default: "0 min",
+    default: 0,
  }
 
 }, { timestamps: true });
 
-BlogSchema.indexes({author: 1});
-BlogSchema.indexes({tags: 1});
 
+BlogSchema.plugin(mongoosePaginate);
 
 const BlogModel = mongoose.model("Blog", BlogSchema);
 
