@@ -196,6 +196,16 @@ const getBlogs = async(filter={}, pagination ={}, sorting = {} ) =>{
 
    //
     const blogs = await BlogModel.paginate(filter, options)
+
+    if (blogs.docs.length === 0) {
+      return {
+        code: 404,
+        success: false,
+        message: "No blogs found for the provided query.",
+        data: null,
+      };
+    }
+
     return {
       code: 200,
       success: true,
