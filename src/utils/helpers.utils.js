@@ -3,7 +3,10 @@ const SearchQuery = (query) => {
 
   const filter = {};
   if (title) filter.title = { $regex: title, $options: "i" };
-  if (tags) filter.tags = { $in: tags.split(",") },{ $options: "i" };
+  if (tags) {
+    const tagsQuery = tags.split(",").map((tag) => new RegExp(`^${tag}$`, "i"));
+    filter.tags = { $in: tagsQuery };
+  }
   if (author) filter["author.username"] = { $regex: author, $options: "i" };
 
   const pagination = {
