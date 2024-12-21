@@ -1,20 +1,12 @@
 const BlogModel = require("../models/blog.model");
+const {calculateReadTime} = require("./calculateReadtime.service")
 
-const CaculateReadTime = (body) => {
-  const wordsPerMinute = 200;
-  let wordCount = 0;
 
-  body.split(" ").forEach(word => {
-    wordCount += 1;
-  });
-
-  return Math.ceil(wordCount / wordsPerMinute);
-};
 
 const createBlog = async (data, authorId) => {
 
   try {
-    const readTime = CaculateReadTime(data.body);
+    const readTime = calculateReadTime(data.body);
     const newBlog = new BlogModel({
       title: data.title,
       description: data.description,
@@ -25,7 +17,6 @@ const createBlog = async (data, authorId) => {
        state: "draft"
       });
     const blog = await newBlog.save();
-
     return {
       code: 201,
       success: true,
@@ -118,7 +109,7 @@ const updateBlog = async (blogId, data, authorId) => {
       blog.body = data.body;
 
       //update read time if body is updated
-    const readTime = CaculateReadTime(data.body);
+    const readTime = calculateReadTime(data.body);
     blog.read_time = readTime;
 }
  //allow title, tags, description to update in draft and published state
@@ -240,7 +231,6 @@ const getBlogs = async(filter={}, pagination ={}, sorting = {} ) =>{
 
 
 module.exports = {
-  CaculateReadTime,
   createBlog,
   getBlogById,
   updateBlog,

@@ -35,7 +35,7 @@ const BlogSchema = new mongoose.Schema({
     trim: true,
   },
   read_time: {
-    type: Number,
+    type: String,
     trim: true,
   },
   read_count: {
