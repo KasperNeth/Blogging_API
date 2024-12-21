@@ -98,7 +98,7 @@ const updateBlog = async (blogId, data, authorId) => {
       return {
         code: 404,
         success: false,
-        message: "Blog not found or you are not the author",
+        message: "Blog not found",
         data: null,
       }
     }
@@ -150,15 +150,27 @@ const updateBlog = async (blogId, data, authorId) => {
 
 const deleteBlog = async (blogId, authorId) => {
   try{
-    const blog = await BlogModel.findOneAndDelete({_id: blogId, author: authorId});
+    const blog = await BlogModel.findById(blogId);
     if(!blog){
       return {
         code: 404,
         success: false,
-        message: "Blog not found or you are not the author",
+        message: "Blog not found ",
         data: null,
       };
     };
+
+     //check  originality of blog ownership before updating
+     if ((!authorId || !blog.author._id.equals(authorId))){
+      return {
+        code: 403,
+        success: false,
+        message: "Unauthorized: You are not allowed to update this blog.",
+        data: null,
+      };
+    }
+    
+    await BlogModel.findByIdAndDelete(blogId);
 
     return {
       code: 200,
