@@ -34,6 +34,10 @@ const blogValidationSchema =
         }
         return true;
       }),
+      body("state")
+      .optional()
+      .isIn(["draft", "published"])
+      .withMessage("Invalid state. Allowed states are 'draft' and 'published'."),
   ];
 
 
