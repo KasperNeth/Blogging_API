@@ -1,13 +1,12 @@
 const BlogService = require("../Services/blog.service")
-const SearchQuery = require("../utils/helpers.utils")
+const {SearchQuery} = require("../utils/helpers.utils")
 
 const createBlog = async (req, res) =>{
-  // console.log('User ID in Request:', req.userid);
-  const userId = req.userid;        
+  const authorId = req.userid;        
   const payload = req.body;
-console.log(`payload incoming: ${payload}`)
 
-  const serviceResponse = await BlogService.createBlog(payload, userId);
+
+  const serviceResponse = await BlogService.createBlog(payload, authorId);
   res.status(serviceResponse.code).json(serviceResponse);
 }
 
@@ -33,7 +32,7 @@ const updateBlog = async (req, res) => {
 
 const deleteBlog = async (req, res) => {
   const blogId = req.params.blogId;
-  const authorId = req.Userid;
+  const authorId = req.userid;
 
   const serviceResponse = await BlogService.deleteBlog(blogId, authorId);
   res.status(serviceResponse.code).json(serviceResponse);

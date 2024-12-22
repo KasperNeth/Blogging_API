@@ -28,7 +28,7 @@ const createBlog = async (data, authorId) => {
     return {
       code: 500,
       success: false,
-      message: err.message || "Internal server error, Fail to create blog",
+      message:  "Internal server error, Fail to create blog",
       data: null,
       
     }
@@ -76,7 +76,7 @@ const getBlogById = async (blogId, authorId) => {
     return {
       code: 500,
       success: false,
-      message: err.message || "Internal server error",
+      message: "Internal server error",
       data: null,
     }
   }
@@ -130,7 +130,7 @@ const updateBlog = async (blogId, data, authorId) => {
       return {
         code: 500,
         success: false,
-        message: err.message || "Failed to update blog",
+        message: "Failed to update blog",
         data: null,
       }
     }
@@ -178,7 +178,7 @@ const deleteBlog = async (blogId, authorId) => {
     return {
       code: 500,
       success: false,
-      message: err.message || "Failed to delete blog",
+      message: "Failed to delete blog",
       data: null,
     }
   }
@@ -222,7 +222,7 @@ const getBlogs = async(filter={}, pagination ={}, sorting = {} ) =>{
   return {
     code: 500,
     success: false,
-    message: err.message || "Failed to get published blogs",
+    message: "Failed to get published blogs",
     data: null,
   }
 }

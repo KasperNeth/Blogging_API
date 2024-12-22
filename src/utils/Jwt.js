@@ -16,7 +16,6 @@ const Tokengenerator = (user)=>{
    
         
     );
-    console.log(`generated token ${Token}`)
     return Token
   }
 

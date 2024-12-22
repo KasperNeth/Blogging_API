@@ -20,7 +20,6 @@ const Signup = async (data)=>{
     });
     const payload = ({ _id: newUser._id, email: newUser.email, username: newUser.username});
     await newUser.save();
-    // const token = TokenGenerator(payload);
     return{
       code: 201,
       success: true,
@@ -39,7 +38,7 @@ const Signup = async (data)=>{
       code: 500,
       success: false,
       data: null,
-      message: err.message || 'user creation failed, please try again'
+      message:'user creation failed, please try again'
     }
 
   }
@@ -89,7 +88,7 @@ const Signin = async(email, password)=> {
       code: 500,
       success: false,
       data: null,
-      message: err.message || 'user login failed, please try again'
+      message: 'user login failed, please try again'
     }
 
   }
