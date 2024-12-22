@@ -204,7 +204,7 @@ const getBlogs = async(filter={}, pagination ={}, sorting = {} ) =>{
       return {
         code: 404,
         success: false,
-        message: "No blogs found for the provided query.",
+        message: "No blogs found.",
         data: null,
       };
     }
@@ -212,7 +212,7 @@ const getBlogs = async(filter={}, pagination ={}, sorting = {} ) =>{
     return {
       code: 200,
       success: true,
-      message: "Published blogs found",
+      message: "blogs found",
       data: blogs,
     }
 
@@ -222,7 +222,7 @@ const getBlogs = async(filter={}, pagination ={}, sorting = {} ) =>{
   return {
     code: 500,
     success: false,
-    message: "Failed to get published blogs",
+    message: "Failed to get blogs",
     data: null,
   }
 }
