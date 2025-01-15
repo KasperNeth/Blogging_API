@@ -1,5 +1,7 @@
 const BlogModel = require("../models/blog.model");
 const {calculateReadTime} = require("./calculateReadtime.service")
+const mongoose = require("mongoose")
+const { ObjectId } = mongoose.Types
 
 
 
@@ -39,6 +41,14 @@ const createBlog = async (data, authorId) => {
 
 const getBlogById = async (blogId, authorId) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(blogId)) {
+      return {
+        code: 400,
+        success: false,
+        message: "Invalid Blog ID",
+        data: null,
+      };
+    }
     const blog = await BlogModel.findOne({_id: blogId}).populate("author", "username email first_name last_name"); 
     if(!blog){
       return {
@@ -98,7 +108,7 @@ const updateBlog = async (blogId, data, authorId) => {
       return {
         code: 403,
         success: false,
-        message: "Unauthorized: You are not allowed to update this blog.",
+        message: "Unauthorized access",
         data: null,
       };
     }
@@ -151,12 +161,12 @@ const deleteBlog = async (blogId, authorId) => {
       };
     };
 
-     //check  originality of blog ownership before updating
+     //check  originality of blog ownership before deleting
      if ((!authorId || !blog.author._id.equals(authorId))){
       return {
         code: 403,
         success: false,
-        message: "Unauthorized: You are not allowed to update this blog.",
+        message: "Unauthorized access",
         data: null,
       };
     }

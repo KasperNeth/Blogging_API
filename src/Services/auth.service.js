@@ -7,9 +7,14 @@ const TokenGenerator = require('../utils/Jwt');
 const Signup = async (data)=>{
   const {first_name, last_name, username, email, password} = data;
   try{
-   const existingUser = await UserModel.findOne({email, username});
+   const existingUser = await UserModel.findOne({ $or:[{email, username}]});
    if(existingUser){
-     throw new Error('User already exists');
+    return{ 
+    code: 409,
+    success: false,
+    data: null,
+    message: 'User already exists'
+  }
    }
     const newUser = new UserModel({
       first_name,
